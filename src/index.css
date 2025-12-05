@@ -1,47 +1,47 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #fdf8f3;
-  --color-primary-100: #faeee0;
-  --color-primary-200: #f4dac0;
-  --color-primary-300: #ecc196;
-  --color-primary-400: #e3a06a;
-  --color-primary-500: #db844a;
-  --color-primary-600: #cd6c3f;
-  --color-primary-700: #ab5536;
-  --color-primary-800: #884532;
-  --color-primary-900: #6e3a2b;
+  --color-primary-50: #fafafa;
+  --color-primary-100: #f5f5f5;
+  --color-primary-200: #e5e5e5;
+  --color-primary-300: #d4d4d4;
+  --color-primary-400: #a3a3a3;
+  --color-primary-500: #737373;
+  --color-primary-600: #525252;
+  --color-primary-700: #404040;
+  --color-primary-800: #262626;
+  --color-primary-900: #171717;
   
-  --color-accent-50: #f0fdfa;
-  --color-accent-100: #ccfbf1;
-  --color-accent-200: #99f6e4;
-  --color-accent-300: #5eead4;
-  --color-accent-400: #2dd4bf;
-  --color-accent-500: #14b8a6;
-  --color-accent-600: #0d9488;
-  --color-accent-700: #0f766e;
-  --color-accent-800: #115e59;
-  --color-accent-900: #134e4a;
+  --color-accent-50: #fafafa;
+  --color-accent-100: #f5f5f5;
+  --color-accent-200: #e5e5e5;
+  --color-accent-300: #d4d4d4;
+  --color-accent-400: #a3a3a3;
+  --color-accent-500: #737373;
+  --color-accent-600: #525252;
+  --color-accent-700: #404040;
+  --color-accent-800: #262626;
+  --color-accent-900: #171717;
 }
 
 body {
-  @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200;
+  @apply bg-white dark:bg-black text-black dark:text-white transition-colors duration-200;
 }
 
 .btn-primary {
-  @apply px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply px-6 py-3 bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
 .btn-secondary {
-  @apply px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 font-medium rounded-lg border border-gray-300 dark:border-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply px-6 py-3 bg-white dark:bg-black hover:bg-gray-50 dark:hover:bg-gray-900 text-black dark:text-white font-medium rounded-lg border-2 border-black dark:border-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
 .input-field {
-  @apply w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200;
+  @apply w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-black dark:focus:border-white transition-all duration-200;
 }
 
 .card {
-  @apply bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 transition-colors duration-200;
+  @apply bg-white dark:bg-black rounded-lg border-2 border-gray-200 dark:border-gray-800 transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-600;
 }
 
 /* Made with Bob */

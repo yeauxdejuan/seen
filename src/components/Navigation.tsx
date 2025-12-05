@@ -26,12 +26,12 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700">
+    <nav className="bg-white dark:bg-black border-b-2 border-gray-200 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <span className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+            <span className="text-2xl font-bold text-black dark:text-white">
               Seen
             </span>
           </Link>
@@ -45,8 +45,8 @@ export function Navigation() {
                 className={`
                   px-3 py-2 text-sm font-medium transition-colors duration-200
                   ${isActiveLink(link.to)
-                    ? 'text-primary-600 dark:text-primary-400 border-b-2 border-primary-600 dark:border-primary-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
+                    ? 'text-black dark:text-white border-b-2 border-black dark:border-white'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'
                   }
                 `}
               >
@@ -60,7 +60,7 @@ export function Navigation() {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200"
+              className="p-2 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-200"
               aria-label="Toggle theme"
             >
               {theme === 'light' ? (
@@ -77,7 +77,7 @@ export function Navigation() {
             {/* Auth Button */}
             {user ? (
               <div className="flex items-center space-x-3">
-                <span className="text-sm text-gray-700 dark:text-gray-300">
+                <span className="text-sm text-black dark:text-white">
                   {user.name}
                 </span>
                 <Button variant="ghost" size="sm" onClick={signOut}>
@@ -95,7 +95,7 @@ export function Navigation() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+              className="p-2 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white"
               aria-label="Toggle mobile menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,7 +111,7 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 dark:border-gray-700 py-4">
+          <div className="md:hidden border-t-2 border-gray-200 dark:border-gray-800 py-4">
             <div className="flex flex-col space-y-2">
               {navLinks.map((link) => (
                 <Link
@@ -121,8 +121,8 @@ export function Navigation() {
                   className={`
                     px-3 py-2 text-base font-medium transition-colors duration-200
                     ${isActiveLink(link.to)
-                      ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                      ? 'text-black dark:text-white bg-gray-100 dark:bg-gray-900'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900'
                     }
                   `}
                 >
@@ -130,10 +130,10 @@ export function Navigation() {
                 </Link>
               ))}
               
-              <div className="flex items-center justify-between px-3 py-2 border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
+              <div className="flex items-center justify-between px-3 py-2 border-t-2 border-gray-200 dark:border-gray-800 mt-4 pt-4">
                 <button
                   onClick={toggleTheme}
-                  className="flex items-center space-x-2 text-gray-700 dark:text-gray-300"
+                  className="flex items-center space-x-2 text-black dark:text-white"
                 >
                   {theme === 'light' ? (
                     <>

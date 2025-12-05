@@ -26,11 +26,11 @@ export function Stepper({ steps, currentStep, className = '' }: StepperProps) {
                 <div
                   className={`
                     w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors duration-200
-                    ${isCompleted 
-                      ? 'bg-primary-600 text-white' 
-                      : isActive 
-                        ? 'bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-400 border-2 border-primary-600' 
-                        : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                    ${isCompleted
+                      ? 'bg-black dark:bg-white text-white dark:text-black'
+                      : isActive
+                        ? 'bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white'
+                        : 'bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
                     }
                   `}
                 >
@@ -50,10 +50,10 @@ export function Stepper({ steps, currentStep, className = '' }: StepperProps) {
                   <div
                     className={`
                       text-sm font-medium
-                      ${isActive 
-                        ? 'text-primary-600 dark:text-primary-400' 
-                        : isCompleted 
-                          ? 'text-gray-900 dark:text-gray-100' 
+                      ${isActive
+                        ? 'text-black dark:text-white font-semibold'
+                        : isCompleted
+                          ? 'text-black dark:text-white'
                           : 'text-gray-500 dark:text-gray-400'
                       }
                     `}
@@ -72,9 +72,9 @@ export function Stepper({ steps, currentStep, className = '' }: StepperProps) {
                 <div
                   className={`
                     flex-1 h-0.5 mx-4 transition-colors duration-200
-                    ${isCompleted 
-                      ? 'bg-primary-600' 
-                      : 'bg-gray-200 dark:bg-gray-700'
+                    ${isCompleted
+                      ? 'bg-black dark:bg-white'
+                      : 'bg-gray-200 dark:bg-gray-800'
                     }
                   `}
                 />
