@@ -253,6 +253,31 @@ export function AboutPage() {
           </div>
         </Card>
 
+        {/* Developer Info */}
+        <Card padding="lg" className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+            Application Developer
+          </h2>
+          <div className="flex items-start space-x-4">
+            <div className="w-16 h-16 bg-black dark:bg-white rounded-full flex items-center justify-center flex-shrink-0">
+              <span className="text-2xl font-bold text-white dark:text-black">DE</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                Dejuan Ellsworth
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                dejuan.ellsworth@ibm.com
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">
+                This application was developed as a conceptual prototype to demonstrate how technology
+                can be used to document and address racial discrimination. The goal is to show how
+                data-driven approaches can support communities, inform policy, and drive meaningful change.
+              </p>
+            </div>
+          </div>
+        </Card>
+
         {/* Resources */}
         <Card padding="lg">
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
