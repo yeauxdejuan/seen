@@ -14,6 +14,7 @@ export function Navigation() {
     { to: '/', label: 'Home' },
     { to: '/report', label: 'Report' },
     { to: '/explore', label: 'Explore' },
+    { to: '/impact', label: 'Impact' },
     ...(user ? [{ to: '/my-reports', label: 'My Reports' }] : []),
     { to: '/about', label: 'About' },
   ];

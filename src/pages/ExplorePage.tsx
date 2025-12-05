@@ -203,7 +203,7 @@ export function ExplorePage() {
                   labelStyle={{ color: 'var(--tooltip-text, #111827)' }}
                 />
                 <Legend />
-                <Bar dataKey="count" fill="#000000" name="Number of Reports" />
+                <Bar dataKey="count" fill="currentColor" name="Number of Reports" className="fill-black dark:fill-white" />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -235,10 +235,11 @@ export function ExplorePage() {
                 <Line 
                   type="monotone" 
                   dataKey="count" 
-                  stroke="#000000"
-                  strokeWidth={2}
+                  stroke="currentColor"
+                  strokeWidth={3}
                   name="Number of Reports"
-                  dot={{ fill: '#000000', r: 4 }}
+                  dot={{ r: 5 }}
+                  className="stroke-black dark:stroke-white"
                   activeDot={{ r: 6 }}
                 />
               </LineChart>
@@ -269,7 +270,7 @@ export function ExplorePage() {
                   labelStyle={{ color: 'var(--tooltip-text, #111827)' }}
                 />
                 <Legend />
-                <Bar dataKey="count" fill="#000000" name="Number of Reports" />
+                <Bar dataKey="count" fill="currentColor" name="Number of Reports" className="fill-black dark:fill-white" />
               </BarChart>
             </ResponsiveContainer>
           </Card>

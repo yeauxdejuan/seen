@@ -7,6 +7,7 @@ import { LandingPage } from './pages/LandingPage';
 import { ReportWizard } from './pages/ReportWizard';
 import { MyReports } from './pages/MyReports';
 import { ExplorePage } from './pages/ExplorePage';
+import { ImpactPage } from './pages/ImpactPage';
 import { AboutPage } from './pages/AboutPage';
 import { initializeMockData } from './services/mockReports';
 
@@ -26,6 +27,7 @@ function App() {
               <Route path="/report" element={<ReportWizard />} />
               <Route path="/my-reports" element={<MyReports />} />
               <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/impact" element={<ImpactPage />} />
               <Route path="/about" element={<AboutPage />} />
             </Routes>
           </Layout>
