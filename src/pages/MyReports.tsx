@@ -68,7 +68,7 @@ export function MyReports() {
   // If user is not signed in
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-16">
+      <div className="min-h-screen bg-white dark:bg-black py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Card className="text-center" padding="lg">
             <svg className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@ export function MyReports() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-white dark:bg-black py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -118,7 +118,7 @@ export function MyReports() {
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black dark:border-white"></div>
           </div>
         ) : reports.length === 0 ? (
           <EmptyState
@@ -300,7 +300,7 @@ export function MyReports() {
                       <div className="text-xs text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-200 dark:border-gray-700">
                         <p>Report ID: {selectedReport.id}</p>
                         <p>Submitted: {formatDate(selectedReport.createdAt)}</p>
-                        <p className="mt-2 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded p-2">
+                        <p className="mt-2 bg-gray-100 dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 rounded p-2">
                           <strong>Note:</strong> This data is stored locally in your browser for this prototype. 
                           In a production version, reports would be securely stored with privacy protections.
                         </p>

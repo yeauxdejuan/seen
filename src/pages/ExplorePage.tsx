@@ -57,7 +57,7 @@ export function ExplorePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-400">Loading analytics...</p>
@@ -68,7 +68,7 @@ export function ExplorePage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
         <Card padding="lg">
           <p className="text-gray-600 dark:text-gray-400">Unable to load analytics data.</p>
         </Card>
@@ -77,7 +77,7 @@ export function ExplorePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-white dark:bg-black py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -112,7 +112,7 @@ export function ExplorePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <div className="text-center">
-              <p className="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">
+              <p className="text-4xl font-bold text-black dark:text-white mb-2">
                 {data.totalReports}
               </p>
               <p className="text-gray-600 dark:text-gray-400 font-medium">
@@ -123,7 +123,7 @@ export function ExplorePage() {
           
           <Card>
             <div className="text-center">
-              <p className="text-4xl font-bold text-accent-600 dark:text-accent-400 mb-2">
+              <p className="text-4xl font-bold text-black dark:text-white mb-2">
                 {data.byType.length}
               </p>
               <p className="text-gray-600 dark:text-gray-400 font-medium">
@@ -134,7 +134,7 @@ export function ExplorePage() {
           
           <Card>
             <div className="text-center">
-              <p className="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">
+              <p className="text-4xl font-bold text-black dark:text-white mb-2">
                 {data.byLocation.length}
               </p>
               <p className="text-gray-600 dark:text-gray-400 font-medium">
@@ -157,8 +157,8 @@ export function ExplorePage() {
                 className={`
                   px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200
                   ${selectedTypes.includes(type)
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-black dark:bg-white text-white dark:text-black'
+                    : 'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800'
                   }
                 `}
               >
@@ -168,7 +168,7 @@ export function ExplorePage() {
             {selectedTypes.length > 0 && (
               <button
                 onClick={() => setSelectedTypes([])}
-                className="px-4 py-2 rounded-lg text-sm font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-800"
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-200 dark:bg-gray-800 text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 border-2 border-gray-400 dark:border-gray-600"
               >
                 Clear Filters
               </button>
@@ -203,7 +203,7 @@ export function ExplorePage() {
                   labelStyle={{ color: 'var(--tooltip-text, #111827)' }}
                 />
                 <Legend />
-                <Bar dataKey="count" fill="#cd6c3f" name="Number of Reports" />
+                <Bar dataKey="count" fill="#000000" name="Number of Reports" />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -235,10 +235,10 @@ export function ExplorePage() {
                 <Line 
                   type="monotone" 
                   dataKey="count" 
-                  stroke="#cd6c3f" 
+                  stroke="#000000"
                   strokeWidth={2}
                   name="Number of Reports"
-                  dot={{ fill: '#cd6c3f', r: 4 }}
+                  dot={{ fill: '#000000', r: 4 }}
                   activeDot={{ r: 6 }}
                 />
               </LineChart>
@@ -269,7 +269,7 @@ export function ExplorePage() {
                   labelStyle={{ color: 'var(--tooltip-text, #111827)' }}
                 />
                 <Legend />
-                <Bar dataKey="count" fill="#14b8a6" name="Number of Reports" />
+                <Bar dataKey="count" fill="#000000" name="Number of Reports" />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -283,7 +283,7 @@ export function ExplorePage() {
             </h3>
             <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
               <li className="flex items-start">
-                <svg className="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-black dark:text-white mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 <span>
@@ -291,7 +291,7 @@ export function ExplorePage() {
                 </span>
               </li>
               <li className="flex items-start">
-                <svg className="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-black dark:text-white mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 <span>
@@ -299,7 +299,7 @@ export function ExplorePage() {
                 </span>
               </li>
               <li className="flex items-start">
-                <svg className="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-black dark:text-white mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 <span>
@@ -315,7 +315,7 @@ export function ExplorePage() {
             </h3>
             <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
               <li className="flex items-start">
-                <svg className="w-5 h-5 text-accent-600 dark:text-accent-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-black dark:text-white mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                 </svg>
                 <span>
@@ -323,7 +323,7 @@ export function ExplorePage() {
                 </span>
               </li>
               <li className="flex items-start">
-                <svg className="w-5 h-5 text-accent-600 dark:text-accent-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-black dark:text-white mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                 </svg>
                 <span>
@@ -331,7 +331,7 @@ export function ExplorePage() {
                 </span>
               </li>
               <li className="flex items-start">
-                <svg className="w-5 h-5 text-accent-600 dark:text-accent-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-black dark:text-white mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                 </svg>
                 <span>
