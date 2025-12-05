@@ -1,8 +1,7 @@
-import type { 
-  IncidentReport, 
-  IncidentReportDraft, 
+import type {
+  IncidentReport,
+  IncidentReportDraft,
   IncidentAggregates,
-  IncidentType,
   IncidentTypeCount,
   IncidentTimeSeries,
   LocationCount

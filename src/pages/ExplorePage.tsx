@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Card } from '../components/Card';
-import { Chip } from '../components/Chip';
 import type { IncidentAggregates, IncidentType } from '../types';
 import { INCIDENT_TYPE_LABELS } from '../types';
 import { getAggregatedStats } from '../services/mockReports';
