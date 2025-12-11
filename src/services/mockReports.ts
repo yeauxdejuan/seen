@@ -62,6 +62,11 @@ export async function getMyReports(): Promise<IncidentReport[]> {
   return reports.filter(report => report.userId === 'mock-user-1');
 }
 
+export async function getUserReports(): Promise<IncidentReport[]> {
+  // Alias for getMyReports for compatibility
+  return getMyReports();
+}
+
 export async function getReportById(id: string): Promise<IncidentReport | null> {
   await delay(300);
   

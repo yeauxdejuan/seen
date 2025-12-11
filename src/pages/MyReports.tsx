@@ -7,7 +7,7 @@ import { Chip } from '../components/Chip';
 import { EmptyState } from '../components/EmptyState';
 import type { IncidentReport } from '../types';
 import { INCIDENT_TYPE_LABELS } from '../types';
-import { getMyReports } from '../services/mockReports';
+import { getUserReports } from '../services/mockReports';
 
 export function MyReports() {
   const { user, signIn } = useAuth();
@@ -40,7 +40,7 @@ export function MyReports() {
   const loadReports = async () => {
     try {
       setLoading(true);
-      const userReports = await getMyReports();
+      const userReports = await getUserReports();
       setReports(userReports);
     } catch (error) {
       console.error('Error loading reports:', error);
@@ -139,9 +139,6 @@ export function MyReports() {
               {reports.map((report) => (
                 <Card
                   key={report.id}
-                  hover
-                  className="cursor-pointer"
-                  onClick={() => setSelectedReport(report)}
                 >
                   <div className="space-y-3">
                     <div className="flex justify-between items-start">
@@ -188,6 +185,29 @@ export function MyReports() {
                         )}
                       </div>
                     )}
+                    
+                    <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-700">
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/report/${report.id}`);
+                        }}
+                      >
+                        View Details
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedReport(report);
+                        }}
+                      >
+                        Quick View
+                      </Button>
+                    </div>
                   </div>
                 </Card>
               ))}

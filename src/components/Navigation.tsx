@@ -3,9 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { Button } from './Button';
+import { AuthModal } from './AuthModal';
 
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const { user, signIn, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
@@ -14,6 +16,7 @@ export function Navigation() {
     { to: '/', label: 'Home' },
     { to: '/report', label: 'Report' },
     { to: '/explore', label: 'Explore' },
+    { to: '/advanced-analytics', label: 'Analytics' },
     { to: '/impact', label: 'Impact' },
     ...(user ? [{ to: '/my-reports', label: 'My Reports' }] : []),
     { to: '/about', label: 'About' },
@@ -78,6 +81,16 @@ export function Navigation() {
             {/* Auth Button */}
             {user ? (
               <div className="flex items-center space-x-3">
+                <Link
+                  to="/settings"
+                  className="p-2 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-200"
+                  title="Settings"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </Link>
                 <span className="text-sm text-black dark:text-white">
                   {user.name}
                 </span>
@@ -86,9 +99,14 @@ export function Navigation() {
                 </Button>
               </div>
             ) : (
-              <Button variant="secondary" size="sm" onClick={signIn}>
-                Sign In (Mock)
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Button variant="secondary" size="sm" onClick={() => setShowAuthModal(true)}>
+                  Sign In
+                </Button>
+                <Button variant="ghost" size="sm" onClick={signIn}>
+                  Mock Sign In
+                </Button>
+              </div>
             )}
           </div>
 
@@ -158,15 +176,27 @@ export function Navigation() {
                     Sign Out
                   </Button>
                 ) : (
-                  <Button variant="secondary" size="sm" onClick={signIn}>
-                    Sign In
-                  </Button>
+                  <div className="flex space-x-2">
+                    <Button variant="secondary" size="sm" onClick={() => setShowAuthModal(true)}>
+                      Sign In
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={signIn}>
+                      Mock
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>
           </div>
         )}
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        initialMode="login"
+      />
     </nav>
   );
 }

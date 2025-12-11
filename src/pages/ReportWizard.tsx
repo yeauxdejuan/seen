@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Stepper } from '../components/Stepper';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Chip } from '../components/Chip';
+import { ProgressIndicator } from '../components/ProgressIndicator';
+import { useSmartValidation } from '../components/SmartValidation';
+import { SkipToContent, LiveRegion } from '../components/AccessibilityEnhancements';
+import { OfflineIndicator } from '../components/OfflineSupport';
 import type { 
   IncidentReportDraft, 
   IncidentType,
@@ -33,6 +37,9 @@ export function ReportWizard() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftLoaded, setDraftLoaded] = useState(false);
+  const [liveMessage, setLiveMessage] = useState('');
+  // Offline support available but not actively used in this component
   
   // Form state
   const [formData, setFormData] = useState<Partial<IncidentReportDraft>>({
@@ -62,8 +69,51 @@ export function ReportWizard() {
 
   const [tagInput, setTagInput] = useState('');
 
+  // Validation rules for smart validation
+  const validationRules = [
+    { field: 'incidentTypes', required: true },
+    { field: 'title', required: true, minLength: 5, maxLength: 100 },
+    { field: 'narrative', required: true, minLength: 20, maxLength: 5000 },
+    { field: 'location.city', required: true, minLength: 2 },
+    { field: 'location.state', required: true, minLength: 2 },
+    { field: 'timing.date', required: true },
+    { field: 'impact.description', required: true, minLength: 10, maxLength: 2000 },
+    { field: 'impact.supportDesired', required: true },
+  ];
+
+  const { 
+    setShowErrors, 
+    validateAndShowErrors, 
+    ValidationComponent 
+  } = useSmartValidation(formData, validationRules);
+
+  // Load saved draft on component mount
+  useEffect(() => {
+    try {
+      const savedDraft = localStorage.getItem('seen_report_draft');
+      if (savedDraft) {
+        const parsedDraft = JSON.parse(savedDraft);
+        if (parsedDraft && Object.keys(parsedDraft).length > 0) {
+          setFormData(prev => ({ ...prev, ...parsedDraft }));
+          setLiveMessage('Draft restored from previous session');
+        }
+      }
+    } catch (error) {
+      console.error('Error loading draft:', error);
+    }
+    setDraftLoaded(true);
+  }, []);
+
   const updateFormData = (updates: Partial<IncidentReportDraft>) => {
-    setFormData(prev => ({ ...prev, ...updates }));
+    const newFormData = { ...formData, ...updates };
+    setFormData(newFormData);
+    // Auto-save draft
+    try {
+      localStorage.setItem('seen_report_draft', JSON.stringify(newFormData));
+    } catch (error) {
+      console.error('Error saving draft:', error);
+    }
+    setLiveMessage('Progress saved automatically');
   };
 
   const updateDemographics = (updates: Partial<Demographics>) => {
@@ -155,8 +205,15 @@ export function ReportWizard() {
   };
 
   const handleNext = () => {
+    if (!validateAndShowErrors()) {
+      setLiveMessage('Please fix the errors before continuing');
+      return;
+    }
+
     if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
+      setShowErrors(false); // Reset errors for next step
+      setLiveMessage(`Moved to step ${currentStep + 1} of 5`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -169,15 +226,27 @@ export function ReportWizard() {
   };
 
   const handleSubmit = async () => {
+    if (!validateAndShowErrors()) {
+      setLiveMessage('Please fix all errors before submitting');
+      return;
+    }
+
     setIsSubmitting(true);
+    setLiveMessage('Submitting your report securely...');
+
     try {
       await saveReport(formData as IncidentReportDraft);
-      // Navigate to success page or my reports
+      
+      // Clear the draft after successful submission
+      localStorage.removeItem('seen_report_draft');
+
+      setLiveMessage('Report submitted successfully!');
       navigate('/my-reports', { 
         state: { message: 'Report submitted successfully!' } 
       });
     } catch (error) {
       console.error('Error submitting report:', error);
+      setLiveMessage('Error submitting report. Please try again.');
       alert('There was an error submitting your report. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -186,7 +255,11 @@ export function ReportWizard() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SkipToContent />
+      <OfflineIndicator />
+      <LiveRegion message={liveMessage} />
+      
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8" id="main-content">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
@@ -195,7 +268,27 @@ export function ReportWizard() {
           <p className="text-gray-600 dark:text-gray-400">
             You're in control of what you share. All fields marked as optional can be skipped.
           </p>
+          
+          {draftLoaded && (
+            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg">
+              <div className="flex items-center">
+                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                </svg>
+                <span className="text-sm text-blue-800 dark:text-blue-200">
+                  Draft restored from previous session. Your progress is automatically saved as you type.
+                </span>
+              </div>
+            </div>
+          )}
         </div>
+
+        {/* Progress Indicator */}
+        <ProgressIndicator 
+          currentStep={currentStep}
+          totalSteps={STEPS.length}
+          formData={formData}
+        />
 
         {/* Stepper */}
         <div className="mb-8">
@@ -204,6 +297,8 @@ export function ReportWizard() {
 
         {/* Form Content */}
         <Card padding="lg">
+          {/* Validation Messages */}
+          <ValidationComponent data={formData} />
           {/* Step 1: Context */}
           {currentStep === 1 && (
             <div className="space-y-6">
