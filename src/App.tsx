@@ -26,7 +26,7 @@ function App() {
     <ErrorBoundary>
       <AsyncErrorBoundary>
         <KeyboardNavigationHelper>
-          <Router>
+          <Router basename="/seen">
             <AuthProvider>
               <ThemeProvider>
                 <Layout>
