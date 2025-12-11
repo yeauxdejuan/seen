@@ -1,269 +1,223 @@
-# Seen - Racial Discrimination Documentation Platform
+# Seen - Incident Reporting Platform
 
-A conceptual frontend-only application for documenting and visualizing racial discrimination and bias incidents.
+A comprehensive web application for documenting and analyzing discrimination and bias incidents, built with React, TypeScript, and modern web technologies.
 
-## 🎯 Project Overview
-
-**Seen** is a prototype web application designed to provide a safe, empathetic space where people can document experiences of racial discrimination and bias. The platform aims to:
-
-- Validate individual experiences through collective data
-- Make patterns of discrimination visible to communities
-- Provide evidence for advocacy and policy discussions
-- Create a historical record of discrimination
-- Connect people with resources and support
-
-**⚠️ Important:** This is a **prototype/demonstration application**. All data is stored locally in the browser and not transmitted to any servers. This is not intended for production use or real incident reporting.
-
-## 🚀 Features
+## 🌟 Features
 
 ### Core Functionality
+- **Multi-step Incident Reporting**: Guided form with smart validation and auto-save
+- **Personal Report Management**: View, organize, and track your submitted reports
+- **Analytics Dashboard**: Aggregated, anonymized data visualization with interactive charts
+- **Advanced Analytics**: Deep insights with filtering and trend analysis
+- **Support Resources**: Context-aware support resource finder based on incident type and location
 
-1. **Landing Page**
-   - Clear mission statement and value proposition
-   - "How It Works" section with 3-step visual guide
-   - Privacy and impact messaging
-   - Call-to-action buttons
+### Enhanced User Experience
+- **Accessibility First**: Screen reader support, keyboard navigation, and WCAG compliance
+- **Mobile Optimized**: Responsive design that works seamlessly on all devices
+- **Offline Support**: Continue working even when connectivity is limited
+- **Dark/Light Theme**: User preference-based theme switching
+- **Smart Validation**: Real-time form validation with helpful error messages
+- **Progress Tracking**: Visual indicators for multi-step processes
 
-2. **Multi-Step Report Wizard** (5 Steps)
-   - **Step 1: Context** - Optional demographic information with privacy controls
-   - **Step 2: Incident Details** - Type, title, narrative, and tags
-   - **Step 3: Location & Timing** - Where and when the incident occurred
-   - **Step 4: Impact & Follow-up** - Effects and desired support
-   - **Step 5: Review** - Summary and submission
-
-3. **My Reports Dashboard**
-   - View all submitted reports (requires mock sign-in)
-   - Detailed report view with all information
-   - Empty state for new users
-   - Success messaging after submission
-
-4. **Explore/Analytics Page**
-   - Interactive charts showing aggregated data:
-     - Bar chart: Incidents by type
-     - Line chart: Incidents over time
-     - Horizontal bar chart: Top locations
-   - Filter by incident type
-   - Summary statistics
-   - Key insights and impact messaging
-
-5. **About/Safety Page**
-   - Mission statement and values
-   - Privacy and safety commitments
-   - Comprehensive FAQ with accordion UI
-   - Support resources and links
-   - Prototype disclaimer
+### Privacy & Security
+- **Local Data Storage**: All data stored locally in browser (prototype mode)
+- **Encryption Ready**: Built-in encryption services for production deployment
+- **Anonymous Analytics**: Privacy-preserving data aggregation
+- **Secure File Upload**: Metadata scrubbing and secure file handling
+- **Privacy Controls**: Granular control over what information to share
 
 ### Technical Features
+- **Modern React**: Built with React 18+ and TypeScript
+- **Component Library**: Reusable, accessible UI components
+- **State Management**: Context-based state management for auth and themes
+- **Error Boundaries**: Graceful error handling and recovery
+- **Performance Optimized**: Code splitting and optimized bundle size
 
-- **Theme Toggle** - Light/dark mode with system preference detection
-- **Mock Authentication** - Simple sign-in/sign-out for demonstration
-- **Responsive Design** - Mobile-first approach, works on all screen sizes
-- **Local Storage** - Reports persist in browser storage
-- **Mock API Layer** - Simulates backend with delays for realistic UX
-- **TypeScript** - Full type safety throughout the application
-- **Accessible UI** - Keyboard navigation and ARIA labels
-
-## 🛠️ Tech Stack
-
-- **Framework:** React 18 with TypeScript
-- **Build Tool:** Vite
-- **Routing:** React Router v6
-- **Styling:** Tailwind CSS
-- **Charts:** Recharts
-- **State Management:** React Context API + Hooks
-- **Data Storage:** Browser LocalStorage (mock backend)
-
-## 📦 Installation & Setup
+## 🚀 Getting Started
 
 ### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-- Node.js 18+ and npm
+### Installation
 
-### Installation Steps
-
-1. **Navigate to the project directory:**
+1. **Clone the repository**
    ```bash
+   git clone https://github.com/yourusername/seen.git
    cd seen
    ```
 
-2. **Install dependencies:**
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Start the development server:**
+3. **Start development server**
    ```bash
    npm run dev
    ```
 
-4. **Open your browser:**
+4. **Open in browser**
    Navigate to `http://localhost:5173`
 
-### Build for Production
+### Building for Production
 
 ```bash
 npm run build
 ```
 
-The built files will be in the `dist` directory.
+## 📱 Usage
+
+### Reporting an Incident
+1. Navigate to the "Report" page
+2. Follow the guided multi-step form:
+   - **Context**: Optional demographic information
+   - **Details**: Incident type, description, and tags
+   - **Location**: Where and when the incident occurred
+   - **Impact**: Effects and desired support
+   - **Review**: Confirm and submit
+
+### Viewing Reports
+- Access "My Reports" to see all your submitted reports
+- Click on any report for detailed view with timeline
+- Use the quick view panel for fast browsing
+
+### Exploring Data
+- Visit "Explore" for community analytics
+- Filter by incident type, location, or time period
+- View trends and patterns in aggregated data
+
+## 🛠 Technology Stack
+
+### Frontend
+- **React 18+** - Modern React with hooks and concurrent features
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first CSS framework
+- **Recharts** - Interactive data visualization
+- **React Router** - Client-side routing
+
+### Development Tools
+- **Vite** - Fast build tool and dev server
+- **ESLint** - Code linting and quality
+- **PostCSS** - CSS processing
+- **Vercel** - Deployment platform
+
+### Architecture
+- **Component-Based**: Modular, reusable components
+- **Context API**: State management for auth and themes
+- **Service Layer**: Abstracted data and API services
+- **Error Boundaries**: Robust error handling
 
 ## 📁 Project Structure
 
 ```
-seen/
-├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── Button.tsx
-│   │   ├── Card.tsx
-│   │   ├── Chip.tsx
-│   │   ├── EmptyState.tsx
-│   │   ├── Footer.tsx
-│   │   ├── Layout.tsx
-│   │   ├── Navigation.tsx
-│   │   └── Stepper.tsx
-│   ├── context/            # React Context providers
-│   │   ├── AuthContext.tsx
-│   │   └── ThemeContext.tsx
-│   ├── pages/              # Main page components
-│   │   ├── AboutPage.tsx
-│   │   ├── ExplorePage.tsx
-│   │   ├── LandingPage.tsx
-│   │   ├── MyReports.tsx
-│   │   └── ReportWizard.tsx
-│   ├── services/           # Mock API services
-│   │   └── mockReports.ts
-│   ├── types/              # TypeScript type definitions
-│   │   └── index.ts
-│   ├── App.tsx             # Main app component with routing
-│   ├── main.tsx            # Application entry point
-│   └── index.css           # Global styles with Tailwind
-├── public/                 # Static assets
-├── index.html              # HTML template
-├── tailwind.config.js      # Tailwind configuration
-├── postcss.config.js       # PostCSS configuration
-├── tsconfig.json           # TypeScript configuration
-├── vite.config.ts          # Vite configuration
-└── package.json            # Dependencies and scripts
+src/
+├── components/          # Reusable UI components
+│   ├── AccessibilityEnhancements.tsx
+│   ├── AuthModal.tsx
+│   ├── Button.tsx
+│   ├── Card.tsx
+│   ├── ErrorBoundary.tsx
+│   ├── FileUpload.tsx
+│   ├── Navigation.tsx
+│   └── ...
+├── context/            # React context providers
+│   ├── AuthContext.tsx
+│   └── ThemeContext.tsx
+├── pages/              # Page components
+│   ├── LandingPage.tsx
+│   ├── ReportWizard.tsx
+│   ├── MyReports.tsx
+│   ├── ExplorePage.tsx
+│   └── ...
+├── services/           # Data and API services
+│   ├── mockReports.ts
+│   ├── api.ts
+│   ├── encryption.ts
+│   └── ...
+├── types/              # TypeScript type definitions
+└── App.tsx            # Main application component
 ```
 
-## 🎨 Design Principles
+## 🎯 Key Components
 
-### UX/UI Guidelines
+### ReportWizard
+Multi-step form with:
+- Smart validation and error handling
+- Auto-save functionality
+- Progress tracking
+- Accessibility features
 
-1. **Safe & Empathetic**
-   - Warm color palette (muted golds and teals)
-   - Supportive microcopy throughout
-   - Clear privacy messaging
-   - No blame or questioning language
+### Analytics Dashboard
+Interactive charts showing:
+- Incident trends over time
+- Geographic distribution
+- Category breakdowns
+- Key insights and patterns
 
-2. **User Control**
-   - All demographic fields optional
-   - Privacy toggle for sensitive information
-   - Clear data ownership messaging
-   - Easy navigation and editing
+### Support Resources
+Context-aware resource finder with:
+- Location-based filtering
+- Incident type matching
+- Contact methods and information
+- Integration with report timeline
 
-3. **Accessible**
-   - WCAG compliant color contrasts
-   - Keyboard navigation support
-   - Screen reader friendly
-   - Clear focus states
+## 🔒 Privacy & Security
 
-4. **Responsive**
-   - Mobile-first design
-   - Collapsible navigation on small screens
-   - Touch-friendly interactive elements
-   - Optimized layouts for all screen sizes
+This application is designed with privacy as a core principle:
 
-## 🔐 Privacy & Security Notes
+- **Local Storage**: In prototype mode, all data stays in your browser
+- **Anonymized Analytics**: Personal information is never included in aggregated data
+- **Encryption Ready**: Built-in services for secure data handling in production
+- **User Control**: Granular privacy settings and data control
 
-### Current Implementation (Prototype)
+## 🚧 Development Status
 
-- All data stored in browser's LocalStorage
-- No server communication
-- No real authentication
-- No encryption
-- Data persists until browser storage is cleared
+This is a **prototype/demonstration** application showcasing:
+- Modern web development practices
+- Accessibility-first design
+- Privacy-conscious architecture
+- Comprehensive feature set for incident reporting
 
-### Production Requirements
+### Current State
+- ✅ Full frontend implementation
+- ✅ Mock data and local storage
+- ✅ All core features functional
+- ✅ Responsive design
+- ✅ Accessibility compliance
 
-A production version would require:
-
-- End-to-end encryption
-- Secure authentication (OAuth, 2FA)
-- Database with proper access controls
-- Data anonymization pipelines
-- Regular security audits
-- GDPR/privacy law compliance
-- Partnership with civil rights organizations
-- Legal review and compliance
-- Incident response procedures
-- Data retention policies
-
-## 🚧 Known Limitations
-
-This is a **prototype** with the following limitations:
-
-1. **No Real Backend** - All data is local only
-2. **Mock Authentication** - No real user accounts or security
-3. **Limited Data Validation** - Basic client-side validation only
-4. **No Real Analytics** - Charts use hard-coded mock data
-5. **No Map Integration** - Map visualization is a placeholder
-6. **No Email/Notifications** - Contact features are conceptual
-7. **No Legal Compliance** - Not reviewed for legal requirements
-8. **No Production Security** - Not hardened for real-world use
-
-## 🔮 Future Enhancements
-
-For a production version, consider:
-
-### Technical
-- Real backend API with database
-- User authentication and authorization
-- Data encryption and security measures
-- Real-time analytics processing
-- Map integration (e.g., Mapbox, Google Maps)
-- Email notifications and support
-- Mobile app versions (React Native)
-- Offline support with sync
-- Multi-language support
-
-### Features
-- Advanced filtering and search
-- Export reports (PDF, CSV)
-- Community forums or support groups
-- Resource directory
-- Legal aid connections
-- Advocate/organization accounts
-- Data visualization dashboard for organizations
-- Anonymous public story sharing (opt-in)
-- Impact tracking and reporting
-
-### Operational
-- Partnership with civil rights organizations
-- Legal review and compliance
-- Privacy policy and terms of service
-- Content moderation system
-- Support team and resources
-- Community guidelines
-- Regular security audits
-- Incident response procedures
-
-## 📝 License
-
-This is a prototype/demonstration project. For production use, appropriate licensing and legal review would be required.
+### Production Considerations
+For production deployment, consider:
+- Backend API integration
+- Database setup
+- Authentication system
+- File storage service
+- Security hardening
+- Performance monitoring
 
 ## 🤝 Contributing
 
-This is a demonstration project. For a production version, contributions would need to be coordinated with civil rights organizations and legal experts.
+This project welcomes contributions! Areas for enhancement:
 
-## 📧 Contact
+- Backend API development
+- Additional chart types and analytics
+- Enhanced accessibility features
+- Mobile app development
+- Internationalization
+- Performance optimizations
 
-This is a conceptual prototype created for demonstration purposes.
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-This project concept is inspired by the need for better tools to document and address systemic discrimination. It acknowledges the work of civil rights organizations, advocates, and communities fighting for justice and equity.
+Built with modern web technologies and a focus on:
+- User privacy and security
+- Accessibility and inclusion
+- Community empowerment
+- Social impact
 
 ---
 
-**Remember:** This is a prototype for demonstration purposes only. Do not use this for actual incident reporting that requires official documentation or legal action. If you've experienced discrimination, please contact appropriate authorities and support organizations.
+**Note**: This is a prototype application designed to demonstrate modern web development practices and privacy-conscious design. For production use, additional security measures and backend infrastructure would be required.# seen
