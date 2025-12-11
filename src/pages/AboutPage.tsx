@@ -267,7 +267,7 @@ export function AboutPage() {
                 Dejuan Ellsworth
               </h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                dejuan.ellsworth@ibm.com
+                Developer & Social Impact Advocate
               </p>
               <p className="text-gray-700 dark:text-gray-300 text-sm">
                 This application was developed as a conceptual prototype to demonstrate how technology
