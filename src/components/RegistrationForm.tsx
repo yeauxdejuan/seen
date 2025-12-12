@@ -63,7 +63,7 @@ export function RegistrationForm({ onSuccess, onSwitchToLogin }: RegistrationFor
   };
 
   const updateFormData = (updates: Partial<RegistrationData>) => {
-    setFormData(prev => ({ ...prev, ...updates }));
+    setFormData((prev: RegistrationData) => ({ ...prev, ...updates }));
   };
 
   const displayError = localError || error;

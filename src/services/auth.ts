@@ -42,6 +42,16 @@ export interface RegistrationData {
   acceptedPrivacyPolicy: boolean;
 }
 
+// Backend user type (what we expect from API)
+interface BackendUser {
+  id?: string;
+  email?: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  createdAt?: string;
+}
+
 export class AuthService {
   private static readonly TOKEN_KEY = 'seen_auth_token';
   private static readonly USER_KEY = 'seen_user_data';
@@ -66,14 +76,18 @@ export class AuthService {
         // Store backend auth token
         localStorage.setItem(this.TOKEN_KEY, response.data.accessToken);
         
-        // Convert backend user to our format
+        // Convert backend user to our format with safe property access
+        const backendUser: BackendUser = response.data.user;
         const user: AuthUser = {
-          id: response.data.user.id,
-          email: response.data.user.email,
-          name: `${response.data.user.firstName || ''} ${response.data.user.lastName || ''}`.trim(),
+          id: backendUser.id || this.generateSecureId(),
+          email: backendUser.email || data.email,
+          name: backendUser.name || 
+                (backendUser.firstName || backendUser.lastName ? 
+                 `${backendUser.firstName || ''} ${backendUser.lastName || ''}`.trim() : 
+                 data.name),
           encryptionKey: EncryptionService.generateUserKey(),
           twoFactorEnabled: false,
-          createdAt: response.data.user.createdAt || new Date().toISOString(),
+          createdAt: backendUser.createdAt || new Date().toISOString(),
           lastLogin: new Date().toISOString(),
           preferences: this.getDefaultPreferences()
         };
@@ -139,14 +153,18 @@ export class AuthService {
         // Store backend auth token
         localStorage.setItem(this.TOKEN_KEY, response.data.accessToken);
         
-        // Convert backend user to our format
+        // Convert backend user to our format with safe property access
+        const backendUser: BackendUser = response.data.user;
         const user: AuthUser = {
-          id: response.data.user.id,
-          email: response.data.user.email,
-          name: `${response.data.user.firstName || ''} ${response.data.user.lastName || ''}`.trim(),
+          id: backendUser.id || this.generateSecureId(),
+          email: backendUser.email || credentials.email,
+          name: backendUser.name || 
+                (backendUser.firstName || backendUser.lastName ? 
+                 `${backendUser.firstName || ''} ${backendUser.lastName || ''}`.trim() : 
+                 'User'),
           encryptionKey: EncryptionService.generateUserKey(),
           twoFactorEnabled: false,
-          createdAt: response.data.user.createdAt || new Date().toISOString(),
+          createdAt: backendUser.createdAt || new Date().toISOString(),
           lastLogin: new Date().toISOString(),
           preferences: this.getDefaultPreferences()
         };

@@ -74,7 +74,7 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
           <input
             type="email"
             value={credentials.email}
-            onChange={(e) => setCredentials(prev => ({ ...prev, email: e.target.value }))}
+            onChange={(e) => setCredentials((prev: LoginCredentials) => ({ ...prev, email: e.target.value }))}
             className="input-field"
             placeholder="your.email@example.com"
             required
@@ -89,7 +89,7 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
           <input
             type="password"
             value={credentials.password}
-            onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
+            onChange={(e) => setCredentials((prev: LoginCredentials) => ({ ...prev, password: e.target.value }))}
             className="input-field"
             placeholder="Enter your password"
             required
@@ -105,7 +105,7 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
             <input
               type="text"
               value={credentials.twoFactorCode || ''}
-              onChange={(e) => setCredentials(prev => ({ ...prev, twoFactorCode: e.target.value }))}
+              onChange={(e) => setCredentials((prev: LoginCredentials) => ({ ...prev, twoFactorCode: e.target.value }))}
               className="input-field"
               placeholder="Enter 6-digit code"
               maxLength={6}
