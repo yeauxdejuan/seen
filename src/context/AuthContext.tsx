@@ -81,6 +81,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setIsLoading(true);
       const authenticatedUser = await AuthService.login(credentials);
       setUser(authenticatedUser);
+      
+      // Show success message (will be handled by the component)
+      return { success: true, user: authenticatedUser };
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
       throw err;
@@ -95,6 +98,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setIsLoading(true);
       const newUser = await AuthService.register(data);
       setUser(newUser);
+      
+      // Show success message (will be handled by the component)
+      return { success: true, user: newUser };
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
       throw err;

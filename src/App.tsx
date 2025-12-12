@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { ToastProvider } from './context/ToastContext';
 import { Layout } from './components/Layout';
 import { LandingPage } from './pages/LandingPage';
 import { ReportWizard } from './pages/ReportWizard';
@@ -29,9 +30,11 @@ function App() {
           <Router basename="/seen">
             <AuthProvider>
               <ThemeProvider>
-                <Layout>
+                <ToastProvider>
+                  <Layout>
             <Routes>
-              <Route path="/" element={<LandingPage />} />
+              <Route path="/" element={<LandingPage key="home" />} />
+              <Route index element={<LandingPage key="home-index" />} />
               <Route path="/report" element={<ReportWizard />} />
               <Route path="/my-reports" element={<MyReports />} />
               <Route path="/report/:reportId" element={<ReportDetailPage />} />
@@ -41,7 +44,8 @@ function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/settings" element={<SettingsPage />} />
             </Routes>
-                </Layout>
+                  </Layout>
+                </ToastProvider>
               </ThemeProvider>
             </AuthProvider>
           </Router>

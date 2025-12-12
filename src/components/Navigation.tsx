@@ -2,14 +2,17 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useBackendStatus } from '../hooks/useBackendStatus';
 import { Button } from './Button';
 import { AuthModal } from './AuthModal';
 
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const { user, signIn, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const { isConnected, isChecking } = useBackendStatus();
   const location = useLocation();
 
   const navLinks = [
@@ -24,7 +27,7 @@ export function Navigation() {
 
   const isActiveLink = (path: string) => {
     if (path === '/') {
-      return location.pathname === '/';
+      return location.pathname === '/' || location.pathname === '';
     }
     return location.pathname.startsWith(path);
   };
@@ -61,6 +64,17 @@ export function Navigation() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Connection Status */}
+            <div className="flex items-center space-x-2">
+              <div className={`w-2 h-2 rounded-full ${
+                isChecking ? 'bg-yellow-500 animate-pulse' : 
+                isConnected ? 'bg-green-500' : 'bg-gray-400'
+              }`} />
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {isChecking ? 'Checking...' : isConnected ? 'Live' : 'Demo'}
+              </span>
+            </div>
+
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -100,11 +114,14 @@ export function Navigation() {
               </div>
             ) : (
               <div className="flex items-center space-x-2">
-                <Button variant="secondary" size="sm" onClick={() => setShowAuthModal(true)}>
+                <Button variant="secondary" size="sm" onClick={() => { setShowAuthModal(true); setAuthMode('register'); }}>
+                  Create Account
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => { setShowAuthModal(true); setAuthMode('login'); }}>
                   Sign In
                 </Button>
-                <Button variant="ghost" size="sm" onClick={signIn}>
-                  Mock Sign In
+                <Button variant="ghost" size="sm" onClick={signIn} title="Demo mode with mock data">
+                  Demo
                 </Button>
               </div>
             )}
@@ -176,12 +193,15 @@ export function Navigation() {
                     Sign Out
                   </Button>
                 ) : (
-                  <div className="flex space-x-2">
-                    <Button variant="secondary" size="sm" onClick={() => setShowAuthModal(true)}>
+                  <div className="flex flex-col space-y-2">
+                    <Button variant="secondary" size="sm" onClick={() => { setShowAuthModal(true); setAuthMode('register'); setIsMobileMenuOpen(false); }}>
+                      Create Account
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={() => { setShowAuthModal(true); setAuthMode('login'); setIsMobileMenuOpen(false); }}>
                       Sign In
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={signIn}>
-                      Mock
+                    <Button variant="ghost" size="sm" onClick={() => { signIn(); setIsMobileMenuOpen(false); }}>
+                      Demo Mode
                     </Button>
                   </div>
                 )}
@@ -195,7 +215,7 @@ export function Navigation() {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        initialMode="login"
+        initialMode={authMode}
       />
     </nav>
   );

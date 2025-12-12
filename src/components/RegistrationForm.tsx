@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from './Button';
 import { Card } from './Card';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import type { RegistrationData } from '../services/auth';
 
 interface RegistrationFormProps {
@@ -11,6 +12,7 @@ interface RegistrationFormProps {
 
 export function RegistrationForm({ onSuccess, onSwitchToLogin }: RegistrationFormProps) {
   const { register, error } = useAuth();
+  const { showToast } = useToast();
   const [formData, setFormData] = useState<RegistrationData>({
     email: '',
     password: '',
@@ -48,6 +50,10 @@ export function RegistrationForm({ onSuccess, onSwitchToLogin }: RegistrationFor
 
     try {
       await register(formData);
+      showToast({
+        message: 'Account created successfully! Welcome to Seen.',
+        type: 'success'
+      });
       onSuccess?.();
     } catch (err) {
       setLocalError(err instanceof Error ? err.message : 'Registration failed');
@@ -211,10 +217,10 @@ export function RegistrationForm({ onSuccess, onSwitchToLogin }: RegistrationFor
           </svg>
           <div>
             <p className="text-xs text-green-800 dark:text-green-200 font-medium mb-1">
-              Your data is protected
+              Secure Account Creation
             </p>
             <p className="text-xs text-green-700 dark:text-green-300">
-              All personal information is encrypted end-to-end and stored securely.
+              Accounts are created on our secure backend when available, or stored locally with encryption for demo purposes.
             </p>
           </div>
         </div>

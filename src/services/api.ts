@@ -23,7 +23,7 @@ interface ApiConfig {
 
 export class ApiService {
   private static config: ApiConfig = {
-    baseUrl: import.meta.env.VITE_API_URL || 'https://api.seen.app',
+    baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:8080',
     timeout: 30000,
     retries: 3,
     apiKey: import.meta.env.VITE_API_KEY

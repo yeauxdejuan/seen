@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from './Button';
 import { Card } from './Card';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import type { LoginCredentials } from '../services/auth';
 
 interface LoginFormProps {
@@ -11,6 +12,7 @@ interface LoginFormProps {
 
 export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
   const { login, error } = useAuth();
+  const { showToast } = useToast();
   const [credentials, setCredentials] = useState<LoginCredentials>({
     email: '',
     password: '',
@@ -27,6 +29,10 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
 
     try {
       await login(credentials);
+      showToast({
+        message: 'Successfully signed in!',
+        type: 'success'
+      });
       onSuccess?.();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Login failed';
@@ -137,8 +143,8 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
       {/* Demo Notice */}
       <div className="mt-6 p-3 bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg">
         <p className="text-xs text-blue-800 dark:text-blue-200">
-          <strong>Demo:</strong> For testing, use any email and password (min 8 chars). 
-          For 2FA demo, enter any 6-digit code.
+          <strong>Authentication:</strong> Sign in with your backend account or create a local demo account. 
+          Backend accounts sync across devices, while demo accounts are stored locally.
         </p>
       </div>
     </Card>

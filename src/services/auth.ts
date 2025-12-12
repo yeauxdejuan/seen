@@ -1,5 +1,6 @@
-// Enhanced authentication service with 2FA support
+// Enhanced authentication service with 2FA support and backend integration
 import { EncryptionService } from './encryption';
+import { ApiService } from './api';
 
 export interface AuthUser {
   id: string;
@@ -50,6 +51,48 @@ export class AuthService {
     // Validate registration data
     this.validateRegistration(data);
 
+    try {
+      // Try backend registration first
+      const response = await ApiService.register({
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.password,
+        firstName: data.name.split(' ')[0],
+        lastName: data.name.split(' ').slice(1).join(' ') || '',
+        agreeToTerms: data.acceptedTerms
+      });
+
+      if (response.success && response.data) {
+        // Store backend auth token
+        localStorage.setItem(this.TOKEN_KEY, response.data.accessToken);
+        
+        // Convert backend user to our format
+        const user: AuthUser = {
+          id: response.data.user.id,
+          email: response.data.user.email,
+          name: `${response.data.user.firstName || ''} ${response.data.user.lastName || ''}`.trim(),
+          encryptionKey: EncryptionService.generateUserKey(),
+          twoFactorEnabled: false,
+          createdAt: response.data.user.createdAt || new Date().toISOString(),
+          lastLogin: new Date().toISOString(),
+          preferences: this.getDefaultPreferences()
+        };
+
+        // Store user data locally for offline access
+        localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+        localStorage.setItem(this.ENCRYPTION_KEY, user.encryptionKey);
+        
+        return user;
+      }
+    } catch (error) {
+      console.warn('Backend registration failed, falling back to local storage:', error);
+    }
+
+    // Fallback to local storage (mock mode)
+    return this.registerLocally(data);
+  }
+
+  private static async registerLocally(data: RegistrationData): Promise<AuthUser> {
     // Generate secure user ID and encryption key
     const userId = this.generateSecureId();
     const encryptionKey = EncryptionService.generateUserKey();
@@ -67,16 +110,16 @@ export class AuthService {
       preferences: this.getDefaultPreferences()
     };
 
-    // In a real app, this would be sent to a secure backend
+    // Store encrypted user data locally
     const userData = {
       ...user,
       passwordHash: hashedPassword,
       salt,
       termsAcceptedAt: new Date().toISOString(),
-      privacyPolicyAcceptedAt: new Date().toISOString()
+      privacyPolicyAcceptedAt: new Date().toISOString(),
+      isLocalAccount: true // Flag to indicate this is a local account
     };
 
-    // Store encrypted user data
     localStorage.setItem(this.USER_KEY, JSON.stringify(userData));
     localStorage.setItem(this.ENCRYPTION_KEY, encryptionKey);
     
@@ -88,12 +131,53 @@ export class AuthService {
   }
 
   static async login(credentials: LoginCredentials): Promise<AuthUser> {
+    try {
+      // Try backend login first
+      const response = await ApiService.login(credentials.email, credentials.password);
+      
+      if (response.success && response.data) {
+        // Store backend auth token
+        localStorage.setItem(this.TOKEN_KEY, response.data.accessToken);
+        
+        // Convert backend user to our format
+        const user: AuthUser = {
+          id: response.data.user.id,
+          email: response.data.user.email,
+          name: `${response.data.user.firstName || ''} ${response.data.user.lastName || ''}`.trim(),
+          encryptionKey: EncryptionService.generateUserKey(),
+          twoFactorEnabled: false,
+          createdAt: response.data.user.createdAt || new Date().toISOString(),
+          lastLogin: new Date().toISOString(),
+          preferences: this.getDefaultPreferences()
+        };
+
+        // Store user data locally for offline access
+        localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+        localStorage.setItem(this.ENCRYPTION_KEY, user.encryptionKey);
+        
+        return user;
+      }
+    } catch (error) {
+      console.warn('Backend login failed, trying local storage:', error);
+    }
+
+    // Fallback to local storage (mock mode)
+    return this.loginLocally(credentials);
+  }
+
+  private static async loginLocally(credentials: LoginCredentials): Promise<AuthUser> {
     const storedUserData = localStorage.getItem(this.USER_KEY);
     if (!storedUserData) {
-      throw new Error('User not found');
+      throw new Error('User not found. Please create an account first.');
     }
 
     const userData = JSON.parse(storedUserData);
+    
+    // Check if this is a local account
+    if (!userData.isLocalAccount) {
+      throw new Error('Please use the backend login for this account.');
+    }
+
     const hashedPassword = EncryptionService.hashPassword(credentials.password, userData.salt);
 
     if (hashedPassword !== userData.passwordHash) {
@@ -133,6 +217,12 @@ export class AuthService {
   }
 
   static logout(): void {
+    // Try backend logout first (fire and forget)
+    ApiService.logout().catch(error => {
+      console.warn('Backend logout failed:', error);
+    });
+
+    // Clear local tokens and sensitive data
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.ENCRYPTION_KEY);
     // Keep user data for potential re-login, but remove sensitive tokens
