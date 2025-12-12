@@ -1,0 +1,126 @@
+version: '3.8'
+
+# Podman-compatible compose file
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: seen-postgres
+    environment:
+      POSTGRES_DB: seen_db
+      POSTGRES_USER: seen_user
+      POSTGRES_PASSWORD: seen_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - seen-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: seen-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - seen-network
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: seen-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: seen_user
+      RABBITMQ_DEFAULT_PASS: seen_password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - seen-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: seen-minio
+    environment:
+      MINIO_ROOT_USER: seen_user
+      MINIO_ROOT_PASSWORD: seen_password
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - seen-network
+
+  gateway-service:
+    build: ./gateway-service
+    container_name: seen-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=myVerySecretJWTKeyForProduction
+    depends_on:
+      - redis
+      - auth-service
+    networks:
+      - seen-network
+
+  auth-service:
+    build: ./auth-service
+    container_name: seen-auth
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_USERNAME=seen_user
+      - DB_PASSWORD=seen_password
+      - JWT_SECRET=myVerySecretJWTKeyForProduction
+    depends_on:
+      - postgres
+    networks:
+      - seen-network
+
+  report-service:
+    build: ./report-service
+    container_name: seen-reports
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_USERNAME=seen_user
+      - DB_PASSWORD=seen_password
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - seen-network
+
+  analytics-service:
+    build: ./analytics-service
+    container_name: seen-analytics
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_USERNAME=seen_user
+      - DB_PASSWORD=seen_password
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - seen-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  rabbitmq_data:
+  minio_data:
+
+networks:
+  seen-network:
+    driver: bridge

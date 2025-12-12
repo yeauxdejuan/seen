@@ -1,0 +1,5 @@
+com\seen\gateway\security\SecurityContextRepository.class
+com\seen\gateway\exception\GlobalExceptionHandler.class
+com\seen\gateway\security\JwtAuthenticationManager.class
+com\seen\gateway\GatewayApplication.class
+com\seen\gateway\config\SecurityConfig.class

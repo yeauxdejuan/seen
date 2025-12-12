@@ -1,0 +1,14 @@
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\AuthApplication.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\config\SecurityConfig.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\controller\AuthController.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\dto\LoginRequestDto.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\dto\LoginResponseDto.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\dto\RegisterRequestDto.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\dto\UserResponseDto.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\entity\User.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\exception\AuthenticationException.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\exception\UserAlreadyExistsException.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\repository\UserRepository.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\security\JwtTokenProvider.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\service\AuthService.java
+C:\Users\DeJuanEllsworth\Desktop\seen\backend\auth-service\src\main\java\com\seen\auth\service\EmailService.java

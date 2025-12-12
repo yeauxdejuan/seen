@@ -93,60 +93,62 @@ export class ApiService {
   }
 
   // Authentication endpoints
-  static async login(email: string, password: string): Promise<ApiResponse<{ user: User; token: string }>> {
-    return this.request('/auth/login', {
+  static async login(email: string, password: string): Promise<ApiResponse<{ user: User; accessToken: string }>> {
+    return this.request('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
   }
 
   static async register(userData: {
-    name: string;
     email: string;
     password: string;
-    acceptedTerms: boolean;
-  }): Promise<ApiResponse<{ user: User; token: string }>> {
-    return this.request('/auth/register', {
+    confirmPassword: string;
+    firstName?: string;
+    lastName?: string;
+    agreeToTerms: boolean;
+  }): Promise<ApiResponse<{ user: User; accessToken: string }>> {
+    return this.request('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
   }
 
   static async logout(): Promise<ApiResponse<void>> {
-    const response = await this.request<void>('/auth/logout', {
+    const response = await this.request<void>('/api/auth/logout', {
       method: 'POST',
     });
     localStorage.removeItem('seen_auth_token');
     return response;
   }
 
-  static async refreshToken(): Promise<ApiResponse<{ token: string }>> {
-    return this.request('/auth/refresh', {
+  static async refreshToken(): Promise<ApiResponse<{ accessToken: string }>> {
+    return this.request('/api/auth/refresh', {
       method: 'POST',
     });
   }
 
   // Report endpoints
   static async submitReport(report: IncidentReportDraft): Promise<ApiResponse<IncidentReport>> {
-    return this.request('/reports', {
+    return this.request('/api/reports', {
       method: 'POST',
       body: JSON.stringify(report),
     });
   }
 
-  static async getUserReports(userId: string): Promise<ApiResponse<IncidentReport[]>> {
-    return this.request(`/reports/user/${userId}`);
+  static async getUserReports(): Promise<ApiResponse<IncidentReport[]>> {
+    return this.request('/api/reports');
   }
 
   static async updateReport(reportId: string, updates: Partial<IncidentReport>): Promise<ApiResponse<IncidentReport>> {
-    return this.request(`/reports/${reportId}`, {
-      method: 'PATCH',
+    return this.request(`/api/reports/${reportId}`, {
+      method: 'PUT',
       body: JSON.stringify(updates),
     });
   }
 
   static async deleteReport(reportId: string): Promise<ApiResponse<void>> {
-    return this.request(`/reports/${reportId}`, {
+    return this.request(`/api/reports/${reportId}`, {
       method: 'DELETE',
     });
   }
@@ -169,12 +171,12 @@ export class ApiService {
       });
     }
 
-    const endpoint = `/analytics/aggregated${params.toString() ? `?${params.toString()}` : ''}`;
+    const endpoint = `/api/analytics/aggregated${params.toString() ? `?${params.toString()}` : ''}`;
     return this.request(endpoint);
   }
 
   static async getAdvancedAnalytics(filters?: Record<string, any>): Promise<ApiResponse<any>> {
-    return this.request('/analytics/advanced', {
+    return this.request('/api/analytics/advanced', {
       method: 'POST',
       body: JSON.stringify(filters || {}),
     });
@@ -188,7 +190,7 @@ export class ApiService {
       formData.append('reportId', reportId);
     }
 
-    return this.request('/files/upload', {
+    return this.request('/api/files/upload', {
       method: 'POST',
       body: formData,
       headers: {}, // Let browser set Content-Type for FormData
@@ -196,7 +198,7 @@ export class ApiService {
   }
 
   static async deleteFile(fileId: string): Promise<ApiResponse<void>> {
-    return this.request(`/files/${fileId}`, {
+    return this.request(`/api/files/${fileId}`, {
       method: 'DELETE',
     });
   }
@@ -204,7 +206,7 @@ export class ApiService {
   // Support and resources endpoints
   static async getSupportResources(location?: string): Promise<ApiResponse<any[]>> {
     const params = location ? `?location=${encodeURIComponent(location)}` : '';
-    return this.request(`/support/resources${params}`);
+    return this.request(`/api/support/resources${params}`);
   }
 
   static async requestSupport(request: {
@@ -213,7 +215,7 @@ export class ApiService {
     contactInfo?: string;
     urgent?: boolean;
   }): Promise<ApiResponse<{ requestId: string }>> {
-    return this.request('/support/request', {
+    return this.request('/api/support/request', {
       method: 'POST',
       body: JSON.stringify(request),
     });
@@ -221,19 +223,19 @@ export class ApiService {
 
   // User preferences and settings
   static async updateUserPreferences(preferences: Record<string, any>): Promise<ApiResponse<void>> {
-    return this.request('/user/preferences', {
+    return this.request('/api/user/preferences', {
       method: 'PATCH',
       body: JSON.stringify(preferences),
     });
   }
 
   static async getUserPreferences(): Promise<ApiResponse<Record<string, any>>> {
-    return this.request('/user/preferences');
+    return this.request('/api/user/preferences');
   }
 
   // Health check
   static async healthCheck(): Promise<ApiResponse<{ status: string; timestamp: string }>> {
-    return this.request('/health');
+    return this.request('/actuator/health');
   }
 }
 
